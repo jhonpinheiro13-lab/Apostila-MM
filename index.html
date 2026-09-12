@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Acervo Digital · Cânticos, Músicas e Orações</title>
-  <meta name="description" content="Acervo digital de cânticos, músicas e orações da igreja. Busque, favorite e utilize durante o culto." />
+  <title>Apostila MM · Comunidade Família Santa</title>
+  <meta name="description" content="Acervo digital da Comunidade Família Santa: cânticos, orações, Bíblia e agenda. Busque, favorite e utilize durante a missa." />
   <meta name="color-scheme" content="light" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='19' font-size='20'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -255,11 +255,14 @@ nav.bottom-nav a[data-active="true"] svg { color: var(--gold); }
 /* ---------- Explore cards ---------- */
 .explore-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 14px;
 }
-@media (max-width: 640px) {
-  .explore-grid { grid-template-columns: 1fr; }
+@media (max-width: 520px) {
+  .explore-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .explore-card { padding: 18px 15px; }
+  .explore-card .icon { width: 38px; height: 38px; font-size: 18px; margin-bottom: 11px; }
+  .explore-card h3 { font-size: 16px; }
 }
 .explore-card {
   background: var(--card);
@@ -942,6 +945,101 @@ body.has-video-bar .scroll-bar-spacer { height: 208px; }
   body { background: #fff; padding-bottom: 0; }
   .detail-content { border: none; box-shadow: none; padding: 0; }
 }
+
+/* ---------- logo e nome da comunidade ---------- */
+.brand img.mark {
+  width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+  background: var(--bg-soft); flex-shrink: 0;
+}
+.brand .brand-name { font-size: 19px; line-height: 1.15; }
+@media (max-width: 520px) {
+  .brand .brand-name { font-size: 15.5px; max-width: 190px; }
+  .brand img.mark { width: 34px; height: 34px; }
+}
+
+/* ---------- menu "Mais" do rodapé ---------- */
+nav.bottom-nav button {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; border: none; background: none; color: var(--text-faint);
+  font-size: 10.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+nav.bottom-nav button svg { width: 21px; height: 21px; }
+nav.bottom-nav button[data-active="true"] { color: var(--green); }
+nav.bottom-nav button[data-active="true"] svg { color: var(--gold); }
+.menu-mais { display: flex; flex-direction: column; gap: 6px; }
+.menu-mais button {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  border: 1px solid var(--border); background: var(--card); border-radius: 12px;
+  padding: 14px 16px; font-size: 15px; color: var(--text); cursor: pointer; font-family: inherit;
+}
+.menu-mais button:hover { border-color: var(--gold); }
+.menu-mais button svg { width: 19px; height: 19px; color: var(--gold); flex-shrink: 0; }
+
+/* ---------- Bíblia ---------- */
+.bib-secao {
+  font-family: var(--serif); font-size: 19px; color: var(--green);
+  margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.livro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; }
+.livro-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  border: 1px solid var(--border); background: var(--card); border-radius: 11px;
+  padding: 12px 13px; cursor: pointer; font-family: inherit; text-align: left;
+}
+.livro-btn:hover { border-color: var(--gold); }
+.livro-nome { font-size: 14px; font-weight: 600; color: var(--text); }
+.livro-caps { font-size: 11.5px; color: var(--text-faint); flex-shrink: 0; }
+.cap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 8px; margin-top: 6px; }
+.cap-btn {
+  aspect-ratio: 1; border: 1px solid var(--border); background: var(--card);
+  border-radius: 11px; font-size: 15px; color: var(--text); cursor: pointer; font-family: inherit;
+}
+.cap-btn:hover { border-color: var(--gold); background: var(--bg-soft); }
+.bib-titulo { font-family: var(--serif); font-size: 26px; color: var(--green); margin: 4px 0 14px; }
+.bib-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.bib-passos { display: inline-flex; align-items: center; gap: 4px; }
+.bib-passos span { font-family: var(--serif); font-size: 16px; color: var(--green); padding: 0 8px; }
+.bib-passos button {
+  width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.bib-passos button svg { width: 16px; height: 16px; }
+.bib-passos button:disabled { opacity: .35; cursor: not-allowed; }
+.bib-texto .versiculo { margin: 0 0 11px; line-height: 1.75; font-size: 16px; }
+.bib-texto .v-num {
+  color: var(--gold); font-weight: 700; font-size: 12px; vertical-align: super;
+  margin-right: 5px; font-family: var(--sans);
+}
+.verso-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 13px 15px; cursor: pointer;
+}
+.verso-card:hover { border-color: var(--gold); }
+.verso-ref { font-size: 12px; font-weight: 700; color: var(--gold); margin-bottom: 5px; }
+.verso-txt { font-size: 14.5px; line-height: 1.6; color: var(--text); }
+.verso-txt mark { background: var(--gold-soft); color: var(--text); padding: 0 2px; border-radius: 3px; }
+
+/* ---------- Agenda ---------- */
+.agenda-card {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 13px 15px; cursor: pointer;
+}
+.agenda-card:hover { border-color: var(--gold); }
+.ag-data {
+  flex-shrink: 0; width: 48px; height: 52px; border-radius: 11px; background: var(--bg-soft);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.ag-dia { font-family: var(--serif); font-size: 21px; font-weight: 700; color: var(--green); line-height: 1; }
+.ag-mes { font-size: 10.5px; text-transform: uppercase; color: var(--text-faint); letter-spacing: .06em; }
+.ag-info { flex: 1; min-width: 0; }
+.ag-titulo { font-weight: 600; font-size: 15px; color: var(--text); }
+.ag-sub { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+.ag-obs { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+.agenda-passados { opacity: .62; }
+/* a etiqueta do tipo também aparece fora dos cartões do acervo */
+.cat-tag { color: #fff; font-size: 10.5px; font-weight: 700; padding: 4px 9px; border-radius: 999px; flex-shrink: 0; }
 
 </style>
 </head>
@@ -4924,10 +5022,10 @@ const LIBRARY_DATA = [
 {
 "id": "oracao-de-abertura-do-culto-oracao",
 "tipo": "oracao",
-"title": "Oração de Abertura do Culto",
+"title": "Oração de Abertura da Missa",
 "composer": "Tradicional",
-"categoria": "Culto",
-"subcategoria": "Culto",
+"categoria": "Missa",
+"subcategoria": "Missa",
 "page": null,
 "content": "Senhor, estamos reunidos diante de ti.\n\nPrepara o nosso coração para este momento de louvor e escuta.\nSilencia em nós as distrações que trazemos de fora,\ne desperta em cada um o desejo sincero de te encontrar.\n\nQue a tua presença seja sentida aqui,\nque a tua Palavra toque quem precisa ser tocado,\ne que saiamos daqui diferentes de como entramos.\nVem, Senhor, e reina neste momento.\nAmém.",
 "views": 0
@@ -4935,12 +5033,12 @@ const LIBRARY_DATA = [
 {
 "id": "oracao-de-encerramento-do-culto-oracao",
 "tipo": "oracao",
-"title": "Oração de Encerramento do Culto",
+"title": "Oração de Encerramento da Missa",
 "composer": "Tradicional",
-"categoria": "Culto",
-"subcategoria": "Culto",
+"categoria": "Missa",
+"subcategoria": "Missa",
 "page": null,
-"content": "Senhor, obrigado por este tempo que passamos juntos em tua presença.\n\nQue a Palavra que ouvimos não fique só na mente,\nmas transforme a nossa maneira de viver esta semana.\nVai conosco quando sairmos daqui;\nque o que vivemos neste culto continue vivo em nós.\n\nAbençoa a cada um que esteve presente,\ne a quem não pôde estar, mas está em nosso coração.\nQue a tua paz nos acompanhe até o nosso próximo encontro.\nAmém.",
+"content": "Senhor, obrigado por este tempo que passamos juntos em tua presença.\n\nQue a Palavra que ouvimos não fique só na mente,\nmas transforme a nossa maneira de viver esta semana.\nVai conosco quando sairmos daqui;\nque o que vivemos nesta missa continue vivo em nós.\n\nAbençoa a cada um que esteve presente,\ne a quem não pôde estar, mas está em nosso coração.\nQue a tua paz nos acompanhe até o nosso próximo encontro.\nAmém.",
 "views": 0
 },
 {
@@ -4948,8 +5046,8 @@ const LIBRARY_DATA = [
 "tipo": "oracao",
 "title": "Pai Nosso",
 "composer": "Mateus 6.9-13",
-"categoria": "Culto",
-"subcategoria": "Culto",
+"categoria": "Missa",
+"subcategoria": "Missa",
 "page": null,
 "content": "Pai nosso, que estás nos céus,\nsantificado seja o teu nome.\nVenha o teu reino.\nSeja feita a tua vontade,\nassim na terra como no céu.\n\nO pão nosso de cada dia nos dá hoje.\nE perdoa-nos as nossas dívidas,\nassim como nós também temos perdoado\naos nossos devedores.\n\nE não nos deixes cair em tentação,\nmas livra-nos do mal;\nporque teu é o reino, e o poder,\ne a glória, para sempre. Amém.",
 "views": 0
@@ -4982,11 +5080,12 @@ const LS_HIDE_MARIANO = 'gf_hide_mariano_v1';
 const LS_HIDE_CATOLICO = 'gf_hide_catolico_v1';
 const SS_AUTH = 'gf_admin_auth_v1';
 
-const CHURCH_NAME = 'Igreja';
+const CHURCH_NAME = 'Comunidade Família Santa';
+const CHURCH_LOGO = 'data:image/jpeg;base64,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';
 
 const CANTICO_CATEGORIES = ['Adoração', 'Louvor', 'Comunhão', 'Ceia', 'Crianças', 'Natal', 'Páscoa', 'Outros'];
-const ORACAO_CATEGORIES = ['Manhã', 'Noite', 'Gratidão', 'Intercessão', 'Família', 'Proteção', 'Culto', 'Outros'];
-const SERMAO_CATEGORIES = ['Evangelismo', 'Ensino', 'Família', 'Juventude', 'Culto', 'Santa Ceia', 'Batismo', 'Outros'];
+const ORACAO_CATEGORIES = ['Manhã', 'Noite', 'Gratidão', 'Intercessão', 'Família', 'Proteção', 'Missa', 'Outros'];
+const SERMAO_CATEGORIES = ['Evangelismo', 'Ensino', 'Família', 'Juventude', 'Missa', 'Santa Ceia', 'Batismo', 'Outros'];
 
 // Todo o conteúdo da apostila original fica visível por padrão. Estes dois
 // filtros são opcionais, para quem quiser deixar de fora o que é próprio da
@@ -5001,7 +5100,7 @@ const CATEGORY_COLORS = {
   'Adoração': '#7C5CAD', 'Louvor': '#D68A3C', 'Comunhão': '#B89555', 'Ceia': '#4F9B6E',
   'Crianças': '#4A90A4', 'Natal': '#C0433F', 'Páscoa': '#C17AA0', 'Outros': '#8A8478',
   'Manhã': '#D6A531', 'Noite': '#3F5B7A', 'Gratidão': '#B89555', 'Intercessão': '#7C5CAD',
-  'Família': '#C9A227', 'Proteção': '#4F9B6E', 'Culto': '#263C35',
+  'Família': '#C9A227', 'Proteção': '#4F9B6E', 'Missa': '#263C35',
   'Evangelismo': '#C0433F', 'Ensino': '#3F5B7A', 'Juventude': '#4A90A4',
   'Santa Ceia': '#7C5CAD', 'Batismo': '#4F9B6E',
 };
@@ -5024,13 +5123,13 @@ function saveViews(obj) { lsSet(LS_VIEWS, obj); }
 function loadSetlist() { return lsGet(LS_SETLIST, []); }
 function saveSetlist(list) { lsSet(LS_SETLIST, list); }
 
-// ---------- playlists (Modo Culto) ----------
+// ---------- playlists (Modo Missa) ----------
 // Várias listas nomeadas e salvas, não apenas "a lista de hoje".
 function loadPlaylists() {
   let pls = lsGet(LS_PLAYLISTS, null);
   if (!pls || !Array.isArray(pls) || pls.length === 0) {
     const legacy = loadSetlist(); // migra a lista única antiga, se existir
-    pls = [{ id: 'default-' + Date.now().toString(36), name: 'Culto de hoje', items: legacy || [] }];
+    pls = [{ id: 'default-' + Date.now().toString(36), name: 'Missa de hoje', items: legacy || [] }];
     savePlaylists(pls);
   }
   return pls;
@@ -5071,7 +5170,7 @@ function renamePlaylist(id, name) {
 }
 function deletePlaylist(id) {
   let pls = loadPlaylists().filter(p => p.id !== id);
-  if (pls.length === 0) pls = [{ id: 'default-' + Date.now().toString(36), name: 'Culto de hoje', items: [] }];
+  if (pls.length === 0) pls = [{ id: 'default-' + Date.now().toString(36), name: 'Missa de hoje', items: [] }];
   savePlaylists(pls);
   if (getActivePlaylistId() === id) setActivePlaylistId(pls[0].id);
 }
@@ -5333,7 +5432,7 @@ function setScrollLevel(id, lvl) { const m = loadScrollLevels(); m[id] = lvl; ls
 function getVideoOffset(id) { const m = lsGet(LS_VIDEO_OFFSET, {}); return m[id] || 0; }
 function setVideoOffset(id, v) { const m = lsGet(LS_VIDEO_OFFSET, {}); m[id] = v; lsSet(LS_VIDEO_OFFSET, m); }
 
-// No modo culto quem rola é o painel; nas demais telas, a própria página.
+// No modo missa quem rola é o painel; nas demais telas, a própria página.
 function scrollTargetEl() {
   return document.querySelector('.presentation .p-body') || document.scrollingElement || document.documentElement;
 }
@@ -5346,7 +5445,7 @@ function startAutoScroll() {
   let last = performance.now();
   const step = now => {
     if (!scrollState.running) return;
-    // resolvido a cada quadro: ao trocar de música no Modo Culto o painel
+    // resolvido a cada quadro: ao trocar de música no Modo Missa o painel
     // que rola é recriado, e o elemento antigo deixaria a rolagem parada
     const el = scrollTargetEl();
     const dt = Math.min(0.12, (now - last) / 1000);
@@ -5690,6 +5789,9 @@ const ICONS = {
   pin: '<path d="M12 17v5"/><path d="M9 3h6l-1 6 3 3v2H7v-2l3-3-1-6z"/>',
   book: '<path d="M4 4a2 2 0 012-2h13v18H6a2 2 0 00-2 2V4z"/><path d="M9 7h6M9 11h6"/>',
   share: '<path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  bible: '<path d="M5 4a2 2 0 012-2h12v18H7a2 2 0 00-2 2V4z"/><path d="M12 6v7M9.5 8.5h5"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
   inbox: '<path d="M4 5v7a2 2 0 002 2h12a2 2 0 002-2V5"/><path d="M8 10l4 4 4-4"/><path d="M12 14V2"/>',
   sync: '<path d="M21 12a9 9 0 01-14.5 7"/><path d="M3 12a9 9 0 0114.5-7"/><path d="M21 4v5h-5"/><path d="M3 20v-5h5"/>',
 };
@@ -5701,15 +5803,17 @@ function renderShell() {
   document.getElementById('site-header').innerHTML = `
     <div class="header-inner">
       <div class="brand" id="brand-home">
-        <span class="mark">✦</span> ${escapeHtml(CHURCH_NAME)}
+        <img class="mark" src="${CHURCH_LOGO}" alt="" /> <span class="brand-name">${escapeHtml(CHURCH_NAME)}</span>
       </div>
       <nav class="top-nav">
         <a href="#/" data-active="${activeKey === ''}">Início</a>
         <a href="#/acervo" data-active="${activeKey === 'acervo'}">Acervo</a>
+        <a href="#/biblia" data-active="${activeKey === 'biblia'}">Bíblia</a>
         <a href="#/oracoes" data-active="${activeKey === 'oracoes'}">Orações</a>
-        <a href="#/sermoes" data-active="${activeKey === 'sermoes'}">Sermões</a>
+        <a href="#/agenda" data-active="${activeKey === 'agenda'}">Agenda</a>
+        <a href="#/palavra" data-active="${activeKey === 'palavra'}">Evangelho do dia</a>
         <a href="#/favoritos" data-active="${activeKey === 'favoritos'}">Favoritos</a>
-        <a href="#/modo-culto" data-active="${activeKey === 'modo-culto'}">Modo Culto</a>
+        <a href="#/modo-missa" data-active="${activeKey === 'modo-missa'}">Modo Missa</a>
       </nav>
       <a href="#/admin" class="admin-link" title="Área administrativa">${icon('cog')}</a>
     </div>
@@ -5719,10 +5823,31 @@ function renderShell() {
   document.getElementById('bottom-nav').innerHTML = `
     <a href="#/" data-active="${activeKey === ''}">${icon('home')}Início</a>
     <a href="#/acervo" data-active="${activeKey === 'acervo'}">${icon('music')}Cânticos</a>
-    <a href="#/oracoes" data-active="${activeKey === 'oracoes'}">${icon('pray')}Orações</a>
-    <a href="#/sermoes" data-active="${activeKey === 'sermoes'}">${icon('book')}Sermões</a>
-    <a href="#/favoritos" data-active="${activeKey === 'favoritos'}">${icon('heart')}Favoritos</a>
+    <a href="#/biblia" data-active="${activeKey === 'biblia'}">${icon('bible')}Bíblia</a>
+    <a href="#/palavra" data-active="${activeKey === 'palavra'}">${icon('book')}Evangelho</a>
+    <button id="nav-mais" data-active="${['oracoes','agenda','favoritos','modo-missa','admin'].includes(activeKey)}">${icon('menu')}Mais</button>
   `;
+  document.getElementById('nav-mais').addEventListener('click', abrirMenuMais);
+}
+
+function abrirMenuMais() {
+  renderModal(`
+    <div class="sheet-header">
+      <h2>Mais</h2>
+      <button class="close-btn" id="modal-close">${icon('close')}</button>
+    </div>
+    <div class="menu-mais">
+      <button data-ir="oracoes">${icon('pray')}<span>Orações</span></button>
+      <button data-ir="agenda">${icon('calendar')}<span>Agenda</span></button>
+      <button data-ir="favoritos">${icon('heart')}<span>Favoritos</span></button>
+      <button data-ir="modo-missa">${icon('play')}<span>Modo Missa</span></button>
+      <button data-ir="admin">${icon('cog')}<span>Área administrativa</span></button>
+    </div>`);
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.querySelectorAll('[data-ir]').forEach(el => el.addEventListener('click', () => {
+    closeModal();
+    navTo(el.dataset.ir);
+  }));
 }
 
 // ---------- HOME ----------
@@ -5754,15 +5879,25 @@ function pageHome() {
             <h3>Cânticos</h3>
             <div class="count">${canticos.length} itens</div>
           </div>
-          <div class="explore-card" data-nav="sermoes">
+          <div class="explore-card" data-nav="biblia">
+            <div class="icon">✝</div>
+            <h3>Bíblia</h3>
+            <div class="count">66 livros</div>
+          </div>
+          <div class="explore-card" data-nav="palavra">
             <div class="icon">📖</div>
-            <h3>Sermões</h3>
+            <h3>Evangelho do dia</h3>
             <div class="count">${sermoes.length} ${sermoes.length === 1 ? 'item' : 'itens'}</div>
           </div>
           <div class="explore-card" data-nav="oracoes">
             <div class="icon">🙏</div>
             <h3>Orações</h3>
             <div class="count">${oracoes.length} itens</div>
+          </div>
+          <div class="explore-card" data-nav="agenda">
+            <div class="icon">🗓</div>
+            <h3>Agenda</h3>
+            <div class="count">${loadAgenda().filter(c => c.data >= hojeISO()).length} próximos</div>
           </div>
         </div>
       </div>
@@ -5784,9 +5919,9 @@ function pageHome() {
       </div>
 
       <div class="section" style="padding-bottom:30px">
-        <h2 class="section-title">Modo Culto</h2>
+        <h2 class="section-title">Modo Missa</h2>
         <p class="section-sub">Monte a lista de louvores de hoje e apresente em tela cheia, com letra grande e leitura confortável.</p>
-        <button class="primary-btn" id="home-modo-culto" style="max-width:280px">${icon('play')} Abrir Modo Culto</button>
+        <button class="primary-btn" id="home-modo-culto" style="max-width:280px">${icon('play')} Abrir Modo Missa</button>
       </div>
     </div>
   `;
@@ -5802,7 +5937,7 @@ function bindHome() {
   });
   document.querySelectorAll('.explore-card').forEach(el => el.addEventListener('click', () => navTo(el.dataset.nav)));
   document.querySelectorAll('.top-row').forEach(el => el.addEventListener('click', () => navTo(`item/${el.dataset.id}`)));
-  document.getElementById('home-modo-culto').addEventListener('click', () => navTo('modo-culto'));
+  document.getElementById('home-modo-culto').addEventListener('click', () => navTo('modo-missa'));
 }
 
 // ---------- BUSCA (resultados globais) ----------
@@ -5854,7 +5989,7 @@ function renderItemList(list, opts) {
         <span class="badge-dot" style="background:${colorFor(s.categoria)}"></span>
         <span class="info">
           <div class="title">${escapeHtml(s.title)}</div>
-          <div class="sub">${escapeHtml(s.composer || 'Autor não informado')}${opts.showType ? ' · ' + (s.tipo === 'oracao' ? 'Oração' : s.tipo === 'sermao' ? 'Sermão' : 'Cântico') : ''}${s.page ? ' · pág. ' + s.page : ''}</div>
+          <div class="sub">${escapeHtml(s.composer || 'Autor não informado')}${opts.showType ? ' · ' + (s.tipo === 'oracao' ? 'Oração' : s.tipo === 'sermao' ? 'Evangelho do dia' : 'Cântico') : ''}${s.page ? ' · pág. ' + s.page : ''}</div>
         </span>
         <span class="cat-tag" style="background:${colorFor(s.categoria)}">${escapeHtml(s.categoria)}</span>
         <button class="fav-btn" data-fav="${escapeHtml(s.id)}" data-active="${favs.has(s.id)}" title="Favoritar">${icon('heart')}</button>
@@ -5941,7 +6076,7 @@ function pageOracoes() {
     <div class="container">
       <div class="section" style="padding-top:26px">
         <h2 class="section-title">Orações</h2>
-        <p class="section-sub">Textos para orar sozinho, em família ou durante o culto.</p>
+        <p class="section-sub">Textos para orar sozinho, em família ou durante a missa.</p>
       </div>
       <div class="search-row">
         <div class="search-box">${icon('search')}<input id="oracoes-search" type="text" placeholder="Buscar oração..." value="${escapeHtml(oracoesState.query)}" autocomplete="off" /></div>
@@ -6033,7 +6168,7 @@ function pageDetail(id) {
         <button class="fav-btn" id="detail-fav" data-active="${favs.has(s.id)}" style="border:1px solid var(--border);border-radius:10px;padding:10px 15px">${icon('heart')} ${favs.has(s.id) ? 'Favoritado' : 'Favoritar'}</button>
         ${s.tipo === 'cantico' ? `<button id="chords-toggle" data-active="${chordsHidden}">${chordsHidden ? 'Mostrar cifra' : 'Somente letra'}</button>` : ''}
         <div class="font-stepper"><button id="font-minus">A-</button><button id="font-plus">A+</button></div>
-        <button id="add-setlist-btn">${icon('plus')} Modo Culto</button>
+        <button id="add-setlist-btn">${icon('plus')} Modo Missa</button>
         <button id="share-btn">${icon('share')} Compartilhar</button>
         <button id="print-btn">${icon('print')} Imprimir</button>
         <button id="edit-btn">${icon('edit')} Editar</button>
@@ -6058,7 +6193,7 @@ function refreshDetailFont() {
   if (!pre || !wrap) return;
   const hidden = wrap.classList.contains('chords-hidden');
   const delta = parseInt(localStorage.getItem(LS_FONT) || '0', 10);
-  // orações e sermões são texto corrido: quebram linha e não precisam do
+  // orações e o Evangelho do dia são texto corrido: quebram linha e não precisam do
   // encaixe milimétrico que a cifra exige
   if (wrap.classList.contains('text-mode')) {
     pre.style.fontSize = Math.max(13, Math.min(28, 17 + delta)) + 'px';
@@ -6144,7 +6279,7 @@ function confirmDelete(id) {
   setTimeout(() => showToast('Item removido.'), 250);
 }
 
-// ---------- MODO CULTO ----------
+// ---------- MODO MISSA ----------
 function pageModoCulto() {
   const playlists = loadPlaylists();
   const activeId = getActivePlaylistId();
@@ -6153,9 +6288,9 @@ function pageModoCulto() {
   return `
     <div class="container">
       <div class="culto-hero">
-        <div class="kicker" style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Modo Culto</div>
+        <div class="kicker" style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Modo Missa</div>
         <h2 class="section-title" style="text-align:center">Monte suas playlists</h2>
-        <p class="section-sub" style="text-align:center">Crie e salve quantas listas quiser (culto de domingo, ensaio, vigília...) e apresente em tela cheia, com letra grande e leitura confortável para todos.</p>
+        <p class="section-sub" style="text-align:center">Crie e salve quantas listas quiser (missa de domingo, ensaio, vigília...) e apresente em tela cheia, com letra grande e leitura confortável para todos.</p>
       </div>
 
       <div class="playlist-bar" id="playlist-bar">
@@ -6250,7 +6385,7 @@ function bindModoCulto() {
     render();
   });
   const startBtn = document.getElementById('start-presentation');
-  if (startBtn) startBtn.addEventListener('click', () => navTo('modo-culto/apresentacao'));
+  if (startBtn) startBtn.addEventListener('click', () => navTo('modo-missa/apresentacao'));
   const clearBtn = document.getElementById('clear-setlist');
   if (clearBtn) clearBtn.addEventListener('click', () => { if (confirm('Esvaziar esta playlist?')) { saveActivePlaylistItems([]); render(); } });
 
@@ -6276,7 +6411,7 @@ function bindModoCulto() {
 let presState = { index: 0 };
 function pagePresentation() {
   const setlist = getActivePlaylist().items.map(findItem).filter(Boolean);
-  if (setlist.length === 0) { navTo('modo-culto'); return ''; }
+  if (setlist.length === 0) { navTo('modo-missa'); return ''; }
   if (presState.index >= setlist.length) presState.index = 0;
   const s = setlist[presState.index];
   const chordsHidden = s.tipo === 'cantico' && defaultChordsHidden();
@@ -6284,7 +6419,7 @@ function pagePresentation() {
   return `
     <div class="presentation">
       <div class="p-top">
-        <button class="p-icon" id="pres-exit" title="Sair do Modo Culto">${icon('close')}</button>
+        <button class="p-icon" id="pres-exit" title="Sair do Modo Missa">${icon('close')}</button>
         <div class="p-meta">
           <div class="p-song">${escapeHtml(s.title)}</div>
           <div class="p-sub">${escapeHtml(s.composer || 'Autor não informado')} · ${presState.index + 1} de ${setlist.length}</div>
@@ -6349,7 +6484,7 @@ function bindPresentation() {
   document.getElementById('pres-scroll-faster').addEventListener('click', () => changeScrollLevel(1));
   const presVideo = document.getElementById('pres-video');
   if (presVideo) presVideo.addEventListener('click', () => openVideoBar(findItem(current)));
-  document.getElementById('pres-exit').addEventListener('click', () => { presState.index = 0; destroyVideoBar(); navTo('modo-culto'); });
+  document.getElementById('pres-exit').addEventListener('click', () => { presState.index = 0; destroyVideoBar(); navTo('modo-missa'); });
   const prev = document.getElementById('pres-prev');
   const next = document.getElementById('pres-next');
   if (prev) prev.addEventListener('click', () => { presState.index = Math.max(0, presState.index - 1); render(); });
@@ -6450,7 +6585,7 @@ function adminItemsHtml() {
       <button class="chip" data-tf="" data-active="${!adminState.typeFilter}">Todos</button>
       <button class="chip" data-tf="cantico" data-active="${adminState.typeFilter === 'cantico'}">Cânticos/Músicas</button>
       <button class="chip" data-tf="oracao" data-active="${adminState.typeFilter === 'oracao'}">Orações</button>
-      <button class="chip" data-tf="sermao" data-active="${adminState.typeFilter === 'sermao'}">Sermões</button>
+      <button class="chip" data-tf="sermao" data-active="${adminState.typeFilter === 'sermao'}">Evangelho do dia</button>
     </div>
     <div style="margin-top:10px">
       ${list.map(s => `
@@ -6458,7 +6593,7 @@ function adminItemsHtml() {
           <span class="badge-dot" style="width:8px;height:8px;border-radius:50%;background:${colorFor(s.categoria)};flex-shrink:0"></span>
           <span class="info">
             <div class="title">${escapeHtml(s.title)} ${s.mine ? '<span style="color:var(--gold);font-size:11px">· sua</span>' : ''}${s.edited ? '<span style="color:var(--gold);font-size:11px">· editado</span>' : ''}</div>
-            <div class="sub">${escapeHtml(s.composer || '—')} · ${escapeHtml(s.categoria)} · ${s.tipo === 'oracao' ? 'Oração' : s.tipo === 'sermao' ? 'Sermão' : 'Cântico'}</div>
+            <div class="sub">${escapeHtml(s.composer || '—')} · ${escapeHtml(s.categoria)} · ${s.tipo === 'oracao' ? 'Oração' : s.tipo === 'sermao' ? 'Evangelho do dia' : 'Cântico'}</div>
           </span>
           <span class="actions">
             <button data-view="${escapeHtml(s.id)}" title="Ver">${icon('chevronR')}</button>
@@ -6483,7 +6618,7 @@ function adminConfigHtml() {
         <button id="toggle-catolico" data-on="${hideCatolico()}">${hideCatolico() ? 'Ocultos' : 'Visíveis'}</button>
       </div>
       <div class="settings-row">
-        <div><div>Passar tudo para outro celular</div><div class="desc">Gera um arquivo com tudo que você adicionou, editou, favoritou e com suas playlists. Os PDFs anexados não vão junto.</div></div>
+        <div><div>Passar tudo para outro celular</div><div class="desc">Gera um arquivo com tudo que você adicionou, editou, favoritou, com suas playlists e a agenda. Os PDFs anexados não vão junto.</div></div>
         <button id="export-btn">Gerar arquivo</button>
       </div>
       <div class="settings-row">
@@ -6643,6 +6778,7 @@ function shareMyItems() {
   deliverShareFile({
     app: SHARE_APP, versao: SHARE_VERSION, tipo: 'meus-itens', titulo: 'Meus itens',
     itens, edicoes: edits, favoritos: [...loadFavorites()], playlists: loadPlaylists(),
+    agenda: loadAgenda(),
   }, 'meu-acervo.json');
 }
 
@@ -6723,6 +6859,11 @@ function handleSharedFile(e) {
     if (data.tipo === 'meus-itens') {
       if (Array.isArray(data.favoritos)) saveFavorites(new Set([...loadFavorites(), ...data.favoritos]));
       if (data.edicoes) saveEdits({ ...loadEdits(), ...data.edicoes });
+      if (Array.isArray(data.agenda)) {
+        const ag = loadAgenda();
+        data.agenda.forEach(c => { if (!ag.some(x => x.id === c.id)) ag.push(c); });
+        saveAgenda(ag);
+      }
       if (Array.isArray(data.playlists)) {
         const pls = loadPlaylists();
         data.playlists.forEach(p => { if (!pls.some(x => x.name === p.name)) pls.push({ ...p, id: 'pl-' + Math.random().toString(36).slice(2, 9) }); });
@@ -6749,7 +6890,7 @@ function askForSharedFile() {
 }
 
 /* =========================================================
-   SERMÕES — montagem por partes
+   EVANGELHO DO DIA — montagem por partes
    Os campos ficam guardados separados (para reeditar) e o
    texto corrido montado vai em .content, que é o que o resto
    do app já sabe exibir, buscar, projetar e imprimir.
@@ -6786,10 +6927,10 @@ function sermaoModalHtml(isEdit) {
   const s = sermaoDraft;
   return `
     <div class="sheet-header">
-      <h2>${isEdit ? 'Editar sermão' : 'Montar sermão'}</h2>
+      <h2>${isEdit ? 'Editar Evangelho do dia' : 'Montar Evangelho do dia'}</h2>
       <button class="close-btn" id="modal-close">${icon('close')}</button>
     </div>
-    <div class="field"><label>Tema do sermão</label><input type="text" id="sm-title" value="${escapeHtml(s.title)}" placeholder="Ex: A fé que move montanhas" /></div>
+    <div class="field"><label>Tema</label><input type="text" id="sm-title" value="${escapeHtml(s.title)}" placeholder="Ex: A fé que move montanhas" /></div>
     <div class="two-cols">
       <div class="field"><label>Pregador</label><input type="text" id="sm-pregador" value="${escapeHtml(s.composer || '')}" placeholder="Nome de quem prega" /></div>
       <div class="field"><label>Data</label><input type="date" id="sm-data" value="${escapeHtml(s.data || '')}" /></div>
@@ -6813,11 +6954,11 @@ function sermaoModalHtml(isEdit) {
     <div class="field"><label>Conclusão</label><textarea id="sm-conclusao" placeholder="O fecho da mensagem...">${escapeHtml(s.conclusao || '')}</textarea></div>
     <div class="field"><label>Apelo</label><textarea id="sm-apelo" placeholder="O chamado final à congregação...">${escapeHtml(s.apelo || '')}</textarea></div>
     <div class="field">
-      <label>PDF do sermão (opcional)</label>
+      <label>PDF (opcional)</label>
       <input type="file" id="sm-pdf" accept="application/pdf" />
-      <div class="hint">${sermaoDraft.pdfName ? 'PDF atual: ' + escapeHtml(sermaoDraft.pdfName) + ' — escolha outro para substituir.' : 'Anexe o sermão já escrito, se tiver.'}</div>
+      <div class="hint">${sermaoDraft.pdfName ? 'PDF atual: ' + escapeHtml(sermaoDraft.pdfName) + ' — escolha outro para substituir.' : 'Anexe o texto já escrito, se tiver.'}</div>
     </div>
-    <button class="primary-btn" id="sm-save">${isEdit ? 'Salvar alterações' : 'Salvar sermão'}</button>
+    <button class="primary-btn" id="sm-save">${isEdit ? 'Salvar alterações' : 'Salvar'}</button>
     <button class="secondary-btn" id="sm-cancel">Cancelar</button>
   `;
 }
@@ -6865,7 +7006,7 @@ function bindSermaoModal(existing) {
   document.getElementById('sm-save').addEventListener('click', async () => {
     readSermaoPontos();
     const title = document.getElementById('sm-title').value.trim();
-    if (!title) { showToast('Informe o tema do sermão.'); return; }
+    if (!title) { showToast('Informe o tema.'); return; }
     const draft = {
       title,
       composer: document.getElementById('sm-pregador').value.trim(),
@@ -6878,7 +7019,7 @@ function bindSermaoModal(existing) {
       apelo: document.getElementById('sm-apelo').value.trim(),
     };
     draft.content = buildSermaoContent(draft);
-    if (!draft.content) { showToast('Preencha ao menos uma parte do sermão.'); return; }
+    if (!draft.content) { showToast('Preencha ao menos uma parte.'); return; }
 
     const id = existing && existing.id ? existing.id : slugify(title, Date.now().toString(36));
     const saveBtn = document.getElementById('sm-save');
@@ -6889,7 +7030,7 @@ function bindSermaoModal(existing) {
       saveBtn.textContent = 'Salvando PDF...';
       saveBtn.disabled = true;
       try { await savePdf(id, pdfFile); pdfName = pdfFile.name; hasPdfFlag = true; }
-      catch (e) { showToast('Não consegui salvar o PDF.'); saveBtn.disabled = false; saveBtn.textContent = 'Salvar sermão'; return; }
+      catch (e) { showToast('Não consegui salvar o PDF.'); saveBtn.disabled = false; saveBtn.textContent = 'Salvar'; return; }
     }
 
     const item = { ...(existing || {}), ...draft, id, tipo: 'sermao', subcategoria: draft.categoria,
@@ -6898,13 +7039,13 @@ function bindSermaoModal(existing) {
     const idx = list.findIndex(x => x.id === id);
     if (idx >= 0) list[idx] = item; else list.push(item);
     saveUserItems(list);
-    showToast(existing && existing.id ? 'Sermão atualizado.' : 'Sermão salvo!');
+    showToast(existing && existing.id ? 'Evangelho do dia atualizado.' : 'Evangelho do dia salvo!');
     closeModal();
     render();
   });
 }
 
-// ---------- SERMÕES (lista) ----------
+// ---------- EVANGELHO DO DIA (lista) ----------
 let sermoesState = { query: '', categoria: null };
 function pageSermoes() {
   const all = getAllItems().filter(x => x.tipo === 'sermao');
@@ -6921,13 +7062,13 @@ function pageSermoes() {
   return `
     <div class="container">
       <div class="section" style="padding-top:26px">
-        <h2 class="section-title">Sermões</h2>
+        <h2 class="section-title">Evangelho do dia</h2>
         <p class="section-sub">Monte a mensagem por partes: texto base, introdução, pontos, conclusão e apelo.</p>
       </div>
       ${all.length === 0 ? `
         <div class="empty-state">
           ${icon('book', 'style="width:42px;height:42px"')}
-          <div>Nenhum sermão montado ainda.</div>
+          <div>Nenhum Evangelho do dia montado ainda.</div>
           <div class="cta"><button class="primary-btn" id="sermao-first" style="max-width:250px">${icon('plus')} Montar o primeiro</button></div>
         </div>` : `
         <div class="search-row">
@@ -6937,7 +7078,7 @@ function pageSermoes() {
           <button class="chip" data-cat="" data-active="${!sermoesState.categoria}">Todos <span class="count">${all.length}</span></button>
           ${SERMAO_CATEGORIES.map(c => `<button class="chip" data-cat="${escapeHtml(c)}" data-active="${sermoesState.categoria === c}">${escapeHtml(c)} <span class="count">${counts[c] || 0}</span></button>`).join('')}
         </div>
-        <div class="meta-row"><span>${list.length} serm${list.length === 1 ? 'ão' : 'ões'}</span></div>
+        <div class="meta-row"><span>${list.length} ${list.length === 1 ? 'Evangelho do dia' : 'Evangelhos do dia'}</span></div>
         <div class="content-list">
           ${list.map(s => `
             <div class="content-card" data-id="${escapeHtml(s.id)}">
@@ -6949,7 +7090,7 @@ function pageSermoes() {
               <span class="cat-tag" style="background:${colorFor(s.categoria)}">${escapeHtml(s.categoria)}</span>
             </div>`).join('')}
         </div>`}
-      <button class="fab" id="sermoes-fab-add" title="Montar sermão">${icon('plus')}</button>
+      <button class="fab" id="sermoes-fab-add" title="Montar Evangelho do dia">${icon('plus')}</button>
     </div>
   `;
 }
@@ -6961,6 +7102,324 @@ function bindSermoes() {
   document.getElementById('sermoes-fab-add').addEventListener('click', () => openSermaoModal(null));
   const first = document.getElementById('sermao-first');
   if (first) first.addEventListener('click', () => openSermaoModal(null));
+}
+
+/* =========================================================
+   BÍBLIA — Almeida Revista e Corrigida (1914, domínio público)
+   Os 31.100 versículos ficam num arquivo à parte (biblia-data.js),
+   carregado só quando alguém abre a aba, para não pesar a abertura
+   do app. Busca por referência ("Jo 3:16") e por trecho de texto.
+   ========================================================= */
+let bibliaState = { view: 'livros', livro: null, cap: null, query: '', carregando: false, erro: false };
+
+function bibliaPronta() { return typeof BIBLIA_DATA !== 'undefined'; }
+function carregarBiblia() {
+  if (bibliaPronta()) return Promise.resolve();
+  if (carregarBiblia._p) return carregarBiblia._p;
+  carregarBiblia._p = new Promise((resolve, reject) => {
+    const tag = document.createElement('script');
+    tag.src = 'biblia-data.js';
+    tag.onload = () => resolve();
+    tag.onerror = () => reject(new Error('falhou'));
+    document.head.appendChild(tag);
+  });
+  return carregarBiblia._p;
+}
+// "Jo" é João e "Jó" é Jó: aqui o acento decide, então a primeira tentativa
+// compara sem tirar acentos. Sem acento nenhum, "jo" vai para João.
+const BIB_APELIDOS = { 'jo': 'João', 'job': 'Jó', 'jó': 'Jó', 'joao': 'João', 'joão': 'João' };
+function livroPorNome(txt) {
+  const cru = (txt || '').trim().toLowerCase().replace(/\.$/, '');
+  if (!cru) return null;
+  let achado = BIBLIA_DATA.find(l => l.n.toLowerCase() === cru || l.a.toLowerCase() === cru);
+  if (achado) return achado;
+  if (BIB_APELIDOS[cru]) return BIBLIA_DATA.find(l => l.n === BIB_APELIDOS[cru]);
+  const n = norm(cru);
+  achado = BIBLIA_DATA.find(l => norm(l.n) === n || norm(l.a) === n);
+  if (achado) return achado;
+  return BIBLIA_DATA.find(l => norm(l.n).startsWith(n) || norm(l.a).startsWith(n)) || null;
+}
+// "Jo 3:16", "João 3.16", "Salmos 23", "1 Co 13:4-7"
+function lerReferencia(q) {
+  const m = q.trim().match(/^(\d?\s?[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s.]*?)\s*(\d+)(?:\s*[:.]\s*(\d+)(?:\s*-\s*(\d+))?)?\s*$/);
+  if (!m) return null;
+  const livro = livroPorNome(m[1]);
+  if (!livro) return null;
+  const cap = parseInt(m[2], 10);
+  if (!livro.c[cap - 1]) return null;
+  return { livro, cap, vIni: m[3] ? parseInt(m[3], 10) : null, vFim: m[4] ? parseInt(m[4], 10) : null };
+}
+function buscarNaBiblia(q) {
+  const n = norm(q);
+  if (n.length < 3) return [];
+  const out = [];
+  for (const l of BIBLIA_DATA) {
+    for (let ci = 0; ci < l.c.length; ci++) {
+      const cap = l.c[ci];
+      for (let vi = 0; vi < cap.length; vi++) {
+        if (norm(cap[vi]).includes(n)) {
+          out.push({ livro: l, cap: ci + 1, ver: vi + 1, txt: cap[vi] });
+          if (out.length >= 200) return out;
+        }
+      }
+    }
+  }
+  return out;
+}
+function realceHtml(txt, q) {
+  const n = norm(q), alvo = norm(txt);
+  const i = alvo.indexOf(n);
+  if (i < 0) return escapeHtml(txt);
+  return escapeHtml(txt.slice(0, i)) + '<mark>' + escapeHtml(txt.slice(i, i + q.length)) + '</mark>' + escapeHtml(txt.slice(i + q.length));
+}
+
+function pageBiblia() {
+  if (!bibliaPronta()) {
+    return `
+      <div class="container">
+        <div class="section" style="padding-top:26px">
+          <h2 class="section-title">Bíblia Sagrada</h2>
+          <p class="section-sub">Almeida Revista e Corrigida</p>
+        </div>
+        <div class="empty-state">
+          ${bibliaState.erro
+            ? `<div>Não consegui carregar a Bíblia.</div><div class="cta" style="font-size:13px;color:var(--text-faint);max-width:380px;margin:8px auto 0">O arquivo <strong>biblia-data.js</strong> precisa estar na mesma pasta do app.</div>`
+            : `<div>Carregando a Bíblia...</div><div class="cta" style="font-size:12.5px;color:var(--text-faint)">São 31.100 versículos, só na primeira vez.</div>`}
+        </div>
+      </div>`;
+  }
+  const q = bibliaState.query.trim();
+  let miolo = '';
+
+  if (q) {
+    const ref = lerReferencia(q);
+    if (ref) {
+      miolo = versiculosHtml(ref.livro, ref.cap, ref.vIni, ref.vFim);
+    } else {
+      const res = buscarNaBiblia(q);
+      miolo = `<div class="meta-row"><span>${res.length}${res.length >= 200 ? '+' : ''} ocorrência${res.length === 1 ? '' : 's'}</span></div>` +
+        (res.length ? `<div class="content-list">${res.map(r => `
+          <div class="verso-card" data-ref="${escapeHtml(r.livro.n)}|${r.cap}">
+            <div class="verso-ref">${escapeHtml(r.livro.n)} ${r.cap}:${r.ver}</div>
+            <div class="verso-txt">${realceHtml(r.txt, q)}</div>
+          </div>`).join('')}</div>`
+          : `<div class="empty-state"><div>Nada encontrado. Tente um trecho maior, ou uma referência como "Jo 3:16".</div></div>`);
+    }
+  } else if (bibliaState.view === 'texto' && bibliaState.livro) {
+    const l = BIBLIA_DATA.find(x => x.n === bibliaState.livro);
+    miolo = versiculosHtml(l, bibliaState.cap);
+  } else if (bibliaState.view === 'capitulos' && bibliaState.livro) {
+    const l = BIBLIA_DATA.find(x => x.n === bibliaState.livro);
+    miolo = `
+      <button class="back-btn" id="bib-voltar-livros">${icon('back')} Todos os livros</button>
+      <h3 class="bib-titulo">${escapeHtml(l.n)}</h3>
+      <div class="cap-grid">${l.c.map((_, i) => `<button class="cap-btn" data-cap="${i + 1}">${i + 1}</button>`).join('')}</div>`;
+  } else {
+    const grupo = t => BIBLIA_DATA.filter(l => l.t === t).map(l => `
+      <button class="livro-btn" data-livro="${escapeHtml(l.n)}">
+        <span class="livro-nome">${escapeHtml(l.n)}</span>
+        <span class="livro-caps">${l.c.length}</span>
+      </button>`).join('');
+    miolo = `
+      <div class="bib-secao">Velho Testamento</div>
+      <div class="livro-grid">${grupo('VT')}</div>
+      <div class="bib-secao">Novo Testamento</div>
+      <div class="livro-grid">${grupo('NT')}</div>`;
+  }
+
+  return `
+    <div class="container">
+      <div class="section" style="padding-top:26px">
+        <h2 class="section-title">Bíblia Sagrada</h2>
+        <p class="section-sub">Almeida Revista e Corrigida · busque por referência (Jo 3:16) ou por um trecho</p>
+      </div>
+      <div class="search-row">
+        <div class="search-box">${icon('search')}<input id="bib-search" type="text" placeholder="Ex: João 3:16, Salmos 23 ou bom pastor" value="${escapeHtml(bibliaState.query)}" autocomplete="off" /></div>
+      </div>
+      ${miolo}
+    </div>`;
+}
+function versiculosHtml(l, cap, vIni, vFim) {
+  const versos = l.c[cap - 1] || [];
+  const ini = vIni ? vIni : 1;
+  const fim = vFim ? vFim : (vIni ? vIni : versos.length);
+  const lista = [];
+  for (let n = ini; n <= Math.min(fim, versos.length); n++) {
+    lista.push(`<p class="versiculo"><span class="v-num">${n}</span>${escapeHtml(versos[n - 1])}</p>`);
+  }
+  return `
+    <div class="bib-nav">
+      <button class="back-btn" id="bib-voltar-caps">${icon('back')} ${escapeHtml(l.n)}</button>
+      <div class="bib-passos">
+        <button id="bib-prev" ${cap <= 1 ? 'disabled' : ''}>${icon('chevronL')}</button>
+        <span>Capítulo ${cap}</span>
+        <button id="bib-next" ${cap >= l.c.length ? 'disabled' : ''}>${icon('chevronR')}</button>
+      </div>
+    </div>
+    <div class="detail-content text-mode bib-texto" id="bib-conteudo">${lista.join('')}</div>
+    <div class="toolbar">
+      <button id="bib-copiar">${icon('share')} Copiar trecho</button>
+      <button id="bib-evangelho">${icon('book')} Usar no Evangelho do dia</button>
+    </div>`;
+}
+function bindBiblia() {
+  if (!bibliaPronta()) {
+    if (!bibliaState.carregando && !bibliaState.erro) {
+      bibliaState.carregando = true;
+      carregarBiblia().then(() => { bibliaState.carregando = false; render(); })
+        .catch(() => { bibliaState.carregando = false; bibliaState.erro = true; render(); });
+    }
+    return;
+  }
+  const input = document.getElementById('bib-search');
+  input.addEventListener('input', e => {
+    clearTimeout(bindBiblia._t);
+    const val = e.target.value;
+    bindBiblia._t = setTimeout(() => { bibliaState.query = val; render(); focusEnd('bib-search'); }, 300);
+  });
+  document.querySelectorAll('[data-livro]').forEach(el => el.addEventListener('click', () => {
+    bibliaState.livro = el.dataset.livro; bibliaState.view = 'capitulos'; bibliaState.query = ''; render();
+  }));
+  document.querySelectorAll('[data-cap]').forEach(el => el.addEventListener('click', () => {
+    bibliaState.cap = Number(el.dataset.cap); bibliaState.view = 'texto'; render();
+  }));
+  document.querySelectorAll('[data-ref]').forEach(el => el.addEventListener('click', () => {
+    const [livro, cap] = el.dataset.ref.split('|');
+    bibliaState.livro = livro; bibliaState.cap = Number(cap);
+    bibliaState.view = 'texto'; bibliaState.query = ''; render();
+  }));
+  const vl = document.getElementById('bib-voltar-livros');
+  if (vl) vl.addEventListener('click', () => { bibliaState.view = 'livros'; bibliaState.query = ''; render(); });
+  const vc = document.getElementById('bib-voltar-caps');
+  if (vc) vc.addEventListener('click', () => { bibliaState.view = 'capitulos'; bibliaState.query = ''; render(); });
+  const prev = document.getElementById('bib-prev');
+  if (prev) prev.addEventListener('click', () => { bibliaState.cap--; bibliaState.query = ''; render(); });
+  const next = document.getElementById('bib-next');
+  if (next) next.addEventListener('click', () => { bibliaState.cap++; bibliaState.query = ''; render(); });
+  const cp = document.getElementById('bib-copiar');
+  if (cp) cp.addEventListener('click', () => {
+    const el = document.getElementById('bib-conteudo');
+    const txt = `${bibliaState.livro} ${bibliaState.cap}\n\n` + el.innerText;
+    navigator.clipboard.writeText(txt).then(() => showToast('Trecho copiado.')).catch(() => showToast('Não consegui copiar.'));
+  });
+  const ev = document.getElementById('bib-evangelho');
+  if (ev) ev.addEventListener('click', () => {
+    const l = BIBLIA_DATA.find(x => x.n === bibliaState.livro);
+    openSermaoModal(null);
+    setTimeout(() => {
+      const campo = document.getElementById('sm-texto');
+      if (campo) campo.value = `${l.n} ${bibliaState.cap}`;
+    }, 60);
+  });
+}
+
+/* =========================================================
+   AGENDA — compromissos da comunidade
+   ========================================================= */
+const LS_AGENDA = 'gf_agenda_v1';
+const AGENDA_TIPOS = ['Missa', 'Ensaio', 'Reunião', 'Visita', 'Evento', 'Outro'];
+function loadAgenda() { return lsGet(LS_AGENDA, []); }
+function saveAgenda(l) { lsSet(LS_AGENDA, l); }
+function hojeISO() { return new Date().toISOString().slice(0, 10); }
+
+function pageAgenda() {
+  const itens = loadAgenda().slice().sort((a, b) => (a.data + (a.hora || '')).localeCompare(b.data + (b.hora || '')));
+  const hoje = hojeISO();
+  const proximos = itens.filter(c => c.data >= hoje);
+  const passados = itens.filter(c => c.data < hoje).reverse();
+
+  const cartao = c => `
+    <div class="agenda-card" data-ag="${escapeHtml(c.id)}">
+      <div class="ag-data">
+        <span class="ag-dia">${c.data.slice(8, 10)}</span>
+        <span class="ag-mes">${['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][Number(c.data.slice(5, 7)) - 1]}</span>
+      </div>
+      <div class="ag-info">
+        <div class="ag-titulo">${escapeHtml(c.titulo)}</div>
+        <div class="ag-sub">${c.hora ? escapeHtml(c.hora) + ' · ' : ''}${escapeHtml(c.local || 'Local não informado')}</div>
+        ${c.obs ? `<div class="ag-obs">${escapeHtml(c.obs)}</div>` : ''}
+      </div>
+      <span class="cat-tag" style="background:${colorFor(c.tipo)}">${escapeHtml(c.tipo)}</span>
+    </div>`;
+
+  return `
+    <div class="container">
+      <div class="section" style="padding-top:26px">
+        <h2 class="section-title">Agenda</h2>
+        <p class="section-sub">Missas, ensaios, reuniões e demais compromissos da comunidade.</p>
+      </div>
+      ${itens.length === 0 ? `
+        <div class="empty-state">
+          ${icon('calendar', 'style="width:42px;height:42px"')}
+          <div>Nenhum compromisso marcado.</div>
+          <div class="cta"><button class="primary-btn" id="ag-primeiro" style="max-width:250px">${icon('plus')} Marcar o primeiro</button></div>
+        </div>` : `
+        ${proximos.length ? `<div class="bib-secao">Próximos</div><div class="content-list">${proximos.map(cartao).join('')}</div>` : '<div class="empty-state"><div>Nada marcado daqui para a frente.</div></div>'}
+        ${passados.length ? `<div class="bib-secao">Já aconteceram</div><div class="content-list agenda-passados">${passados.map(cartao).join('')}</div>` : ''}
+      `}
+      <button class="fab" id="ag-add" title="Marcar compromisso">${icon('plus')}</button>
+    </div>`;
+}
+function bindAgenda() {
+  document.getElementById('ag-add').addEventListener('click', () => openAgendaModal(null));
+  const p = document.getElementById('ag-primeiro');
+  if (p) p.addEventListener('click', () => openAgendaModal(null));
+  document.querySelectorAll('[data-ag]').forEach(el => el.addEventListener('click', () => {
+    const c = loadAgenda().find(x => x.id === el.dataset.ag);
+    if (c) openAgendaModal(c);
+  }));
+}
+function openAgendaModal(c) {
+  const novo = !c;
+  c = c || { id: '', titulo: '', data: hojeISO(), hora: '', local: '', obs: '', tipo: 'Missa' };
+  renderModal(`
+    <div class="sheet-header">
+      <h2>${novo ? 'Marcar compromisso' : 'Editar compromisso'}</h2>
+      <button class="close-btn" id="modal-close">${icon('close')}</button>
+    </div>
+    <div class="field"><label>O que é</label><input type="text" id="ag-titulo" value="${escapeHtml(c.titulo)}" placeholder="Ex: Missa de domingo" /></div>
+    <div class="two-cols">
+      <div class="field"><label>Data</label><input type="date" id="ag-data" value="${escapeHtml(c.data)}" /></div>
+      <div class="field"><label>Hora</label><input type="time" id="ag-hora" value="${escapeHtml(c.hora || '')}" /></div>
+    </div>
+    <div class="field"><label>Local</label><input type="text" id="ag-local" value="${escapeHtml(c.local || '')}" placeholder="Ex: Igreja matriz" /></div>
+    <div class="field">
+      <label>Tipo</label>
+      <select id="ag-tipo">${AGENDA_TIPOS.map(t => `<option value="${t}" ${c.tipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select>
+    </div>
+    <div class="field"><label>Observações</label><textarea id="ag-obs" placeholder="Quem participa, o que levar...">${escapeHtml(c.obs || '')}</textarea></div>
+    <button class="primary-btn" id="ag-salvar">${novo ? 'Marcar' : 'Salvar alterações'}</button>
+    ${novo ? '' : '<button class="secondary-btn" id="ag-excluir" style="color:var(--danger)">Excluir compromisso</button>'}
+  `);
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('ag-salvar').addEventListener('click', () => {
+    const titulo = document.getElementById('ag-titulo').value.trim();
+    const data = document.getElementById('ag-data').value;
+    if (!titulo) { showToast('Informe o compromisso.'); return; }
+    if (!data) { showToast('Informe a data.'); return; }
+    const reg = {
+      id: c.id || 'ag-' + Date.now().toString(36),
+      titulo, data,
+      hora: document.getElementById('ag-hora').value,
+      local: document.getElementById('ag-local').value.trim(),
+      tipo: document.getElementById('ag-tipo').value,
+      obs: document.getElementById('ag-obs').value.trim(),
+    };
+    const lista = loadAgenda();
+    const i = lista.findIndex(x => x.id === reg.id);
+    if (i >= 0) lista[i] = reg; else lista.push(reg);
+    saveAgenda(lista);
+    showToast(novo ? 'Compromisso marcado.' : 'Compromisso atualizado.');
+    closeModal();
+    render();
+  });
+  const ex = document.getElementById('ag-excluir');
+  if (ex) ex.addEventListener('click', () => {
+    if (!confirm(`Excluir "${c.titulo}"?`)) return;
+    saveAgenda(loadAgenda().filter(x => x.id !== c.id));
+    closeModal();
+    render();
+  });
 }
 
 // ---------- FORM / IMPORT MODAL (add/edit) ----------
@@ -7158,12 +7617,16 @@ function render() {
   // Só ao MUDAR de tela paramos a rolagem, fechamos o vídeo e voltamos ao
   // topo. Assim favoritar ou mudar a fonte no meio de uma música não
   // interrompe a rolagem nem a reprodução.
+  // endereços antigos (#/modo-culto, #/sermoes) seguem funcionando
+  const ROUTE_ALIAS = { 'modo-culto': 'modo-missa', 'modo-culto/apresentacao': 'modo-missa/apresentacao', 'sermoes': 'palavra' };
+  if (ROUTE_ALIAS[clean]) { navTo(ROUTE_ALIAS[clean]); return; }
+
   const routeChanged = clean !== lastRouteKey;
   if (routeChanged) {
     stopAutoScroll(true);
     const openId = clean.startsWith('item/') ? clean.slice(5) : null;
     // o vídeo só continua tocando se seguirmos na música dele
-    if (videoState.itemId && videoState.itemId !== openId && clean !== 'modo-culto/apresentacao') destroyVideoBar();
+    if (videoState.itemId && videoState.itemId !== openId && clean !== 'modo-missa/apresentacao') destroyVideoBar();
   }
   lastRouteKey = clean;
 
@@ -7174,10 +7637,12 @@ function render() {
   else if (clean === 'busca') { root.innerHTML = pageBusca(params); bindBusca(); }
   else if (clean === 'acervo') { root.innerHTML = pageAcervo(); bindAcervo(); }
   else if (clean === 'oracoes') { root.innerHTML = pageOracoes(); bindOracoes(); }
-  else if (clean === 'sermoes') { root.innerHTML = pageSermoes(); bindSermoes(); }
+  else if (clean === 'palavra') { root.innerHTML = pageSermoes(); bindSermoes(); }
+  else if (clean === 'biblia') { root.innerHTML = pageBiblia(); bindBiblia(); }
+  else if (clean === 'agenda') { root.innerHTML = pageAgenda(); bindAgenda(); }
   else if (clean === 'favoritos') { root.innerHTML = pageFavoritos(); bindFavoritos(); }
-  else if (clean === 'modo-culto') { root.innerHTML = pageModoCulto(); bindModoCulto(); }
-  else if (clean === 'modo-culto/apresentacao') { root.innerHTML = pagePresentation(); if (document.querySelector('.presentation')) bindPresentation(); }
+  else if (clean === 'modo-missa') { root.innerHTML = pageModoCulto(); bindModoCulto(); }
+  else if (clean === 'modo-missa/apresentacao') { root.innerHTML = pagePresentation(); if (document.querySelector('.presentation')) bindPresentation(); }
   else if (clean === 'admin') { root.innerHTML = pageAdmin(); bindAdmin(); }
   else if (clean.startsWith('item/')) { const id = clean.slice(5); root.innerHTML = pageDetail(id); bindDetail(id); }
   else { root.innerHTML = pageHome(); bindHome(); }
