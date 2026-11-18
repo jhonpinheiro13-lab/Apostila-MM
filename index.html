@@ -1083,6 +1083,16 @@ nav.bottom-nav button[data-active="true"] svg { color: var(--gold); }
 .tom-reset:disabled { opacity: .4; cursor: not-allowed; }
 .tom-reset:not(:disabled):hover { border-color: var(--gold); color: var(--green); }
 
+/* Na barra de ações o Favoritar é um botão com texto, não o coraçãozinho
+   quadrado da lista: sem isto ele fica espremido em 34px e o rótulo some. */
+.toolbar .fav-btn {
+  width: auto; height: auto; gap: 6px;
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 15px; color: var(--text); font-size: 13.5px;
+}
+.toolbar .fav-btn:hover { border-color: var(--gold); }
+.toolbar .fav-btn svg { width: 15px; height: 15px; }
+
 </style>
 </head>
 <body>
@@ -6402,7 +6412,7 @@ function pageDetail(id) {
       ${isCantico ? tomPainelHtml(s, passos) : ''}
       <p class="hscroll-hint">← arraste a cifra para o lado para ver mais →</p>
       <div class="toolbar">
-        <button class="fav-btn" id="detail-fav" data-active="${favs.has(s.id)}" style="border:1px solid var(--border);border-radius:10px;padding:10px 15px">${icon('heart')} ${favs.has(s.id) ? 'Favoritado' : 'Favoritar'}</button>
+        <button class="fav-btn" id="detail-fav" data-active="${favs.has(s.id)}">${icon('heart')} ${favs.has(s.id) ? 'Favoritado' : 'Favoritar'}</button>
         ${isCantico ? `<button id="tom-btn" data-active="false">${icon('tuning')} Tom <strong>${escapeHtml(tomDaMusica(s.content, passos))}</strong></button>` : ''}
         ${s.tipo === 'cantico' ? `<button id="chords-toggle" data-active="${chordsHidden}">${chordsHidden ? 'Mostrar cifra' : 'Somente letra'}</button>` : ''}
         <div class="font-stepper"><button id="font-minus">A-</button><button id="font-plus">A+</button></div>
