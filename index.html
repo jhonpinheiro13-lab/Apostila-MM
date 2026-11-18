@@ -1045,6 +1045,44 @@ nav.bottom-nav button[data-active="true"] svg { color: var(--gold); }
 .chip.secao { font-weight: 700; border-color: var(--gold); color: var(--green); }
 .chip.secao[data-active="true"] { background: var(--green); border-color: var(--green); color: #fff; }
 
+/* ---------- painel de mudança de tom ---------- */
+#tom-btn strong { color: var(--gold); margin-left: 2px; }
+#tom-btn[data-active="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+#tom-btn[data-active="true"] strong { color: var(--gold); }
+.tom-painel {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px; margin-top: 12px; box-shadow: var(--shadow);
+}
+.tom-linha { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.tom-passo {
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text);
+  border-radius: 11px; padding: 11px 15px; font-size: 13.5px; cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+}
+.tom-passo:hover { border-color: var(--gold); }
+.tom-atual {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: 68px; height: 54px; border-radius: 14px; background: var(--green); color: #fff;
+}
+.tom-atual strong { font-family: var(--serif); font-size: 22px; color: var(--gold); line-height: 1; }
+.tom-atual small { font-size: 9.5px; opacity: .7; letter-spacing: .08em; text-transform: uppercase; }
+.tom-escala {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px;
+}
+.tom-nota {
+  border: 1px solid var(--border); background: var(--card); color: var(--text);
+  border-radius: 9px; padding: 9px 2px; font-size: 13px; cursor: pointer; font-family: inherit;
+}
+.tom-nota:hover { border-color: var(--gold); }
+.tom-nota[data-active="true"] { background: var(--gold); border-color: var(--gold); color: #241d0c; font-weight: 700; }
+.tom-reset {
+  width: 100%; margin-top: 12px; border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); border-radius: 10px; padding: 10px; font-size: 13px;
+  cursor: pointer; font-family: inherit;
+}
+.tom-reset:disabled { opacity: .4; cursor: not-allowed; }
+.tom-reset:not(:disabled):hover { border-color: var(--gold); color: var(--green); }
+
 </style>
 </head>
 <body>
@@ -5304,6 +5342,161 @@ function renderContentHtml(content) {
   }).join('\n');
 }
 
+/* =========================================================
+   MUDANÇA DE TOM (transposição), como no Cifra Club.
+   O desafio é manter o acorde em cima da sílaba certa: se "C"
+   vira "C#", a linha cresce e desalinha. Por isso a troca é
+   feita por coluna, recolhendo ou devolvendo espaços.
+   ========================================================= */
+const LS_TOM = 'gf_tom_v1';
+
+const NOTAS_SUS = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const NOTAS_BEM = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const NOTA_IDX = { 'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5,
+                   'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11 };
+// tons que por convenção se escrevem com bemol
+const TONS_BEMOL = new Set([1, 3, 5, 8, 10]);   // Db, Eb, F, Ab, Bb
+
+function loadTons() { return lsGet(LS_TOM, {}); }
+function getTom(id) { return loadTons()[id] || 0; }
+function setTom(id, n) {
+  const m = loadTons();
+  n = ((n % 12) + 12) % 12;
+  if (n === 0) delete m[id]; else m[id] = n;
+  lsSet(LS_TOM, m);
+}
+
+function notaTransposta(nota, passos, usarBemol) {
+  const i = NOTA_IDX[nota];
+  if (i === undefined) return nota;
+  const j = ((i + passos) % 12 + 12) % 12;
+  return (usarBemol ? NOTAS_BEM : NOTAS_SUS)[j];
+}
+
+// Troca a raiz (e o baixo das barras) preservando o resto do acorde.
+const ACORDE_RE = /([A-G](?:#|b)?)/;
+function transporAcorde(tok, passos, usarBemol) {
+  const m = tok.match(/^(\(?)([A-G](?:#|b)?)([^/]*?)(?:(\/)([A-G](?:#|b)?))?(\)?[.,]?)$/);
+  if (!m) return tok;
+  const [, abre, raiz, resto, barra, baixo, fecha] = m;
+  let out = abre + notaTransposta(raiz, passos, usarBemol) + (resto || '');
+  if (barra && baixo) out += '/' + notaTransposta(baixo, passos, usarBemol);
+  return out + (fecha || '');
+}
+
+// Reescreve uma linha de cifra mantendo cada acorde na mesma coluna.
+function transporLinha(linha, passos, usarBemol) {
+  const saida = [];
+  let pos = 0;              // coluna de onde já escrevemos
+  let texto = '';
+  const re = /\S+/g;
+  let m;
+  while ((m = re.exec(linha)) !== null) {
+    const col = m.index;
+    const tok = m[0];
+    const novo = isChordishToken(tok) ? transporAcorde(tok, passos, usarBemol) : tok;
+    // espaços até a coluna original; pelo menos um, se o acorde anterior cresceu
+    let faltam = col - texto.length;
+    if (faltam < 1 && texto.length) faltam = 1;
+    if (faltam > 0) texto += ' '.repeat(faltam);
+    texto += novo;
+    pos = col;
+  }
+  // preserva o recuo de linhas que começam com espaço e não têm token algum
+  return texto || linha;
+}
+
+// Além das linhas só de acordes, também precisam ser transpostas as linhas
+// de introdução e passagem, do tipo "Intr.: | E | E7M(9) | C#m7 |", que têm
+// um rótulo na frente e por isso não contam como linha de cifra.
+function linhaComCifra(linha) {
+  if (isChordLine(linha)) return true;
+  const toks = linha.trim().split(/\s+/).filter(Boolean);
+  if (toks.length < 2) return false;
+  const resto = toks.slice(1);
+  const rotulo = /[:.]$/.test(toks[0]) || /^\(?(intr|intro|solo|final|ponte|refr|base|coda)/i.test(toks[0]);
+  if (rotulo && resto.every(isChordishToken)) return true;
+  // notação com barras: "| E | A | B7 |"
+  if (toks.includes('|') && resto.filter(isChordishToken).length >= 2) return true;
+  return false;
+}
+function transporConteudo(conteudo, passos) {
+  if (!passos) return conteudo;
+  const usarBemol = TONS_BEMOL.has(((tomDaMusicaIdx(conteudo) + passos) % 12 + 12) % 12);
+  return conteudo.split('\n')
+    .map(l => (linhaComCifra(l) ? transporLinha(l, passos, usarBemol) : l))
+    .join('\n');
+}
+
+// O primeiro acorde da música costuma ser o tom; serve de referência.
+function tomDaMusicaIdx(conteudo) {
+  for (const l of conteudo.split('\n')) {
+    if (!isChordLine(l)) continue;
+    for (const tok of l.trim().split(/\s+/)) {
+      const p = parseChordName(tok);
+      if (p && NOTA_IDX[p.root] !== undefined) return NOTA_IDX[p.root];
+    }
+  }
+  return 0;
+}
+function tomDaMusica(conteudo, passos) {
+  const base = tomDaMusicaIdx(conteudo);
+  const i = ((base + (passos || 0)) % 12 + 12) % 12;
+  // mantém o "m" quando a música é menor
+  const menor = acordeInicialMenor(conteudo);
+  return (TONS_BEMOL.has(i) ? NOTAS_BEM : NOTAS_SUS)[i] + (menor ? 'm' : '');
+}
+function acordeInicialMenor(conteudo) {
+  for (const l of conteudo.split('\n')) {
+    if (!isChordLine(l)) continue;
+    for (const tok of l.trim().split(/\s+/)) {
+      const p = parseChordName(tok);
+      if (p) return /^m(?!aj)/.test(p.qual);
+    }
+  }
+  return false;
+}
+
+// ---------- painel de tom ----------
+function tomPainelHtml(s, passos) {
+  const menor = acordeInicialMenor(s.content);
+  const base = tomDaMusicaIdx(s.content);
+  const atual = ((base + passos) % 12 + 12) % 12;
+  const escala = NOTAS_SUS.map((_, i) => {
+    const nome = (TONS_BEMOL.has(i) ? NOTAS_BEM : NOTAS_SUS)[i] + (menor ? 'm' : '');
+    const delta = ((i - base) % 12 + 12) % 12;
+    return `<button class="tom-nota" data-tom="${delta}" data-active="${i === atual}">${escapeHtml(nome)}</button>`;
+  }).join('');
+  return `
+    <div class="tom-painel" id="tom-painel" hidden>
+      <div class="tom-linha">
+        <button class="tom-passo" id="tom-menos">−½ tom</button>
+        <div class="tom-atual"><strong id="tom-valor">${escapeHtml(tomDaMusica(s.content, passos))}</strong><small>tom</small></div>
+        <button class="tom-passo" id="tom-mais">+½ tom</button>
+      </div>
+      <div class="tom-escala">${escala}</div>
+      <button class="tom-reset" id="tom-reset" ${passos ? '' : 'disabled'}>Voltar ao tom original</button>
+    </div>`;
+}
+function bindTom(id, s) {
+  const btn = document.getElementById('tom-btn');
+  const painel = document.getElementById('tom-painel');
+  if (!btn || !painel) return;
+  btn.addEventListener('click', () => {
+    painel.hidden = !painel.hidden;
+    btn.dataset.active = String(!painel.hidden);
+  });
+  const muda = n => { setTom(id, n); render(); setTimeout(() => {
+    const p = document.getElementById('tom-painel'); const b = document.getElementById('tom-btn');
+    if (p && getTom(id) !== 0) { p.hidden = false; if (b) b.dataset.active = 'true'; }
+  }, 0); };
+  document.getElementById('tom-menos').addEventListener('click', () => muda(getTom(id) - 1));
+  document.getElementById('tom-mais').addEventListener('click', () => muda(getTom(id) + 1));
+  document.getElementById('tom-reset').addEventListener('click', () => { setTom(id, 0); render(); });
+  painel.querySelectorAll('.tom-nota').forEach(el =>
+    el.addEventListener('click', () => muda(Number(el.dataset.tom))));
+}
+
 // ---------- diagramas de cifra (desenhos de braço do violão) ----------
 // Gera o "desenho" do acorde (como aquelas legendas de posição no topo da
 // música na apostila impressa) a partir do próprio nome do acorde, sem
@@ -5815,6 +6008,7 @@ const ICONS = {
   calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
   bible: '<path d="M5 4a2 2 0 012-2h12v18H7a2 2 0 00-2 2V4z"/><path d="M12 6v7M9.5 8.5h5"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  tuning: '<path d="M12 3v12"/><circle cx="12" cy="18" r="3"/><path d="M7 6h10M7 10h10"/>',
   inbox: '<path d="M4 5v7a2 2 0 002 2h12a2 2 0 002-2V5"/><path d="M8 10l4 4 4-4"/><path d="M12 14V2"/>',
   sync: '<path d="M21 12a9 9 0 01-14.5 7"/><path d="M3 12a9 9 0 0114.5-7"/><path d="M21 4v5h-5"/><path d="M3 20v-5h5"/>',
 };
@@ -6177,6 +6371,8 @@ function pageDetail(id) {
   registerView._pending = id;
   const favs = loadFavorites();
   const isCantico = s.tipo === 'cantico';
+  const passos = isCantico ? getTom(id) : 0;
+  const conteudo = isCantico ? transporConteudo(s.content, passos) : s.content;
   const chordsHidden = isCantico && defaultChordsHidden();
   const videoHref = s.videoUrl || videoSearchUrl(s);
   const autorLabel = s.tipo === 'sermao' ? 'Pregador não informado' : 'Autor não informado';
@@ -6201,11 +6397,13 @@ function pageDetail(id) {
           ${hasPdf(s) ? `<button class="video-link" id="pdf-btn">${icon('print')} Baixar PDF</button>` : ''}
         </div>
       </div>
-      ${isCantico ? chordLegendHtml(s.content) : ''}
-      <div class="detail-content${chordsHidden ? ' chords-hidden' : ''}${isCantico ? '' : ' text-mode'}" id="detail-content"><pre id="song-pre">${isCantico ? renderContentHtml(s.content) : escapeHtml(s.content)}</pre></div>
+      ${isCantico ? chordLegendHtml(conteudo) : ''}
+      <div class="detail-content${chordsHidden ? ' chords-hidden' : ''}${isCantico ? '' : ' text-mode'}" id="detail-content"><pre id="song-pre">${isCantico ? renderContentHtml(conteudo) : escapeHtml(conteudo)}</pre></div>
+      ${isCantico ? tomPainelHtml(s, passos) : ''}
       <p class="hscroll-hint">← arraste a cifra para o lado para ver mais →</p>
       <div class="toolbar">
         <button class="fav-btn" id="detail-fav" data-active="${favs.has(s.id)}" style="border:1px solid var(--border);border-radius:10px;padding:10px 15px">${icon('heart')} ${favs.has(s.id) ? 'Favoritado' : 'Favoritar'}</button>
+        ${isCantico ? `<button id="tom-btn" data-active="false">${icon('tuning')} Tom <strong>${escapeHtml(tomDaMusica(s.content, passos))}</strong></button>` : ''}
         ${s.tipo === 'cantico' ? `<button id="chords-toggle" data-active="${chordsHidden}">${chordsHidden ? 'Mostrar cifra' : 'Somente letra'}</button>` : ''}
         <div class="font-stepper"><button id="font-minus">A-</button><button id="font-plus">A+</button></div>
         <button id="add-setlist-btn">${icon('plus')} Modo Missa</button>
@@ -6287,6 +6485,7 @@ function bindDetail(id) {
   if (pinBtn) pinBtn.addEventListener('click', () => openVideoLinkModal(findItem(id)));
   const playBtn = document.getElementById('video-play-btn');
   if (playBtn) playBtn.addEventListener('click', () => openVideoBar(findItem(id)));
+  bindTom(id, findItem(id));
   const pdfBtn = document.getElementById('pdf-btn');
   if (pdfBtn) pdfBtn.addEventListener('click', () => downloadPdf(findItem(id)));
 }
@@ -6467,7 +6666,7 @@ function pagePresentation() {
         <span class="p-dots">${setlist.map((_, i) => `<i data-on="${i === presState.index}"></i>`).join('')}</span>
       </div>
       <div class="p-body${chordsHidden ? ' chords-hidden' : ''}${s.tipo === 'cantico' ? '' : ' text-mode'}" id="pres-body">
-        <pre id="pres-pre">${s.tipo === 'cantico' ? renderContentHtml(s.content) : escapeHtml(s.content)}</pre>
+        <pre id="pres-pre">${s.tipo === 'cantico' ? renderContentHtml(transporConteudo(s.content, getTom(s.id))) : escapeHtml(s.content)}</pre>
       </div>
       <div class="p-bottom">
         <div class="p-row-main">
